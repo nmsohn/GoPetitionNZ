@@ -1,0 +1,33 @@
+{
+	"name": "petitionsGov",
+	"version": "1.0.0",
+	"main": "index.ts",
+	"author": "nmsohn <odna425@gmail.com>",
+	"license": "MIT",
+	"dependencies": {
+		"axios": "^0.20.0",
+		"cheerio": "^1.0.0-rc.3",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"helmet": "^4.1.0"
+	},
+	"scripts": {
+		"start": "tsc && node dist/index.js",
+		"dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts"
+	},
+	"devDependencies": {
+		"@types/axios": "^0.14.0",
+		"@types/cheerio": "^0.22.21",
+		"@types/cors": "^2.8.7",
+		"@types/express": "^4.17.7",
+		"@types/helmet": "^0.0.48",
+		"@types/jest": "^26.0.10",
+		"@types/node": "^14.6.2",
+		"@vercel/node": "^1.8.1",
+		"jest": "^26.4.2",
+		"nodemon": "^2.0.4",
+		"ts-jest": "^26.3.0",
+		"ts-node": "^9.0.0",
+		"typescript": "^4.0.2"
+	}
+}
