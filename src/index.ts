@@ -1,10 +1,10 @@
-import getPetitionItem from "./lib/getPetitionItem";
+// import getPetitionItem from "./lib/getPetitionItem";
 
-let petition;
+// let petition;
 
-(async () => {
-	petition = await getPetitionItem(Number(99268));
-})();
+// (async () => {
+// 	petition = await getPetitionItem(Number(99268));
+// })();
 
 // import axios from "axios";
 // import cheerio, { html } from "cheerio";
