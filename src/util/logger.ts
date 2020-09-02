@@ -26,3 +26,5 @@ const logger: Logger = createLogger({
 	),
 	transports: [new transports.File(options.file), new transports.Console(options.console)]
 });
+
+export default logger;
