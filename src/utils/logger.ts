@@ -1,7 +1,11 @@
 import * as winston from "winston";
 import * as dotenv from "dotenv";
 
-export class Logger {
+interface ILogger {
+	init(): Promise<winston.Logger>;
+}
+
+export class Logger implements ILogger {
 	private logger: winston.Logger | undefined;
 	private env: string;
 

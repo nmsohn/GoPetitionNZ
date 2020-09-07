@@ -5,8 +5,6 @@ import * as logger from "morgan";
 
 class App {
 	public app: Application;
-	public DB_URL: string | undefined =
-		process.env.NODE_ENV == "production" ? process.env.PROD_DB_URL : process.env.DEV_DB_URL;
 
 	constructor() {
 		this.app = express();
@@ -14,8 +12,4 @@ class App {
 	}
 
 	public config(): void {}
-
-	private connectDB(): void {
-		mongoose.connect(this.DB_URL || "");
-	}
 }
