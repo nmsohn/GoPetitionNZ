@@ -1,7 +1,7 @@
 import axios from "axios";
 import cheerio, { html } from "cheerio";
 
-import { IPetitionItem } from "../models/Petition";
+import { IPetitionItem } from "../types/petitions.types";
 import userAgent from "../config/userAgent.json";
 
 const getPetitionItem = async (id: number): Promise<IPetitionItem | undefined> => {
