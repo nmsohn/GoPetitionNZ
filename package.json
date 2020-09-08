@@ -15,7 +15,8 @@
 		"helmet": "^4.1.0",
 		"mongoose": "^5.10.2",
 		"morgan": "^1.10.0",
-		"winston": "^3.3.3"
+		"winston": "^3.3.3",
+		"winston-azure-functions": "^0.0.3"
 	},
 	"scripts": {
 		"start": "tsc && node dist/index.js",
