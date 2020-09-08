@@ -1,8 +1,7 @@
 import * as winston from "winston";
-import * as dotenv from "dotenv";
 
 interface ILogger {
-	init(): Promise<winston.Logger>;
+	init(): winston.Logger;
 }
 
 export class Logger implements ILogger {
@@ -14,7 +13,7 @@ export class Logger implements ILogger {
 		this.logger = undefined;
 	}
 
-	public async init(): Promise<winston.Logger> {
+	public init(): winston.Logger {
 		const options = {
 			file: {
 				level: "info",
