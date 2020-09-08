@@ -21,7 +21,12 @@ export class connector implements IConnector {
 	}
 
 	public open(): void {
-		const options = {};
+		const options = {
+			useNewUrlParser: true,
+			useCreateIndex: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true
+		};
 		mongoose.connect(this.DB_URL, options);
 	}
 
