@@ -14,7 +14,7 @@ export class connector implements IConnector {
 	private isConnected: boolean = false;
 
 	constructor() {
-		this.logger = new Logger(new Config().getEnvironmentName()).init();
+		this.logger = new Logger().init();
 		mongoose.connection.on("connected", this.onConnection());
 		mongoose.connection.on("error", this.onError());
 		mongoose.connection.on("disconnected", this.onDisconnection());

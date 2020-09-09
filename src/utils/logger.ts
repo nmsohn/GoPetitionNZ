@@ -1,4 +1,5 @@
 import * as winston from "winston";
+import Config from "./config";
 
 interface ILogger {
 	init(): winston.Logger;
@@ -8,8 +9,8 @@ export class Logger implements ILogger {
 	private logger: winston.Logger | undefined;
 	private env: string;
 
-	constructor(env: string) {
-		this.env = env;
+	constructor() {
+		this.env = new Config().getEnvironmentName();
 		this.logger = undefined;
 	}
 
