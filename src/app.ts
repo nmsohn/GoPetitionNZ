@@ -1,6 +1,5 @@
 import express, { Application, Request, Response } from "express";
-import * as dotenv from "dotenv";
-import * as mongoose from "mongoose";
+import Connector from "./utils/connector";
 import * as logger from "morgan";
 
 class App {
@@ -8,7 +7,6 @@ class App {
 
 	constructor() {
 		this.app = express();
-		dotenv.config();
 	}
 
 	public config(): void {}

@@ -11,9 +11,10 @@ interface IConnector {
 export class connector implements IConnector {
 	private readonly DB_URL: string = new Config().getMongoUrl();
 	private logger: winston.Logger;
+	private isConnected: boolean = false;
 
 	constructor() {
-		this.logger = new Logger(new Config().getEnvironmentName()).init();
+		this.logger = new Logger().init();
 		mongoose.connection.on("connected", this.onConnection());
 		mongoose.connection.on("error", this.onError());
 		mongoose.connection.on("disconnected", this.onDisconnection());
@@ -27,7 +28,10 @@ export class connector implements IConnector {
 			useFindAndModify: false,
 			useUnifiedTopology: true
 		};
-		mongoose.connect(this.DB_URL, options);
+		if (!this.isConnected) {
+			mongoose.connect(this.DB_URL, options);
+			this.isConnected = true;
+		}
 	}
 
 	public close(): void {
@@ -53,9 +57,14 @@ export class connector implements IConnector {
 		});
 	}
 	private onDisconnection(): any {
+		if (!this.isConnected) {
+			setTimeout(() => {
+				this.open();
+			}, 2000);
+		}
 		this.logger.log({
 			level: "info",
-			message: `Disconnected from database`
+			message: `Disconnected from database. Trying to reconnect`
 		});
 	}
 }
