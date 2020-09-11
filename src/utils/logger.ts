@@ -40,8 +40,8 @@ export class Logger implements ILogger {
 				}),
 				winston.format.errors({ stack: true }),
 				winston.format.splat(),
-				winston.format.json()
-				// winston.format.prettyPrint()
+				winston.format.json(),
+				winston.format.prettyPrint()
 			),
 			transports: [new winston.transports.File(options.file)]
 		});
@@ -52,6 +52,12 @@ export class Logger implements ILogger {
 		}
 
 		return this.logger;
+	}
+}
+
+export class LogStream {
+	write(msg: string) {
+		new Logger().init().info(msg);
 	}
 }
 

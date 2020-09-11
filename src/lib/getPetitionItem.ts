@@ -1,6 +1,5 @@
 import axios from "axios";
 import cheerio, { html } from "cheerio";
-import { omitBy, isNil } from "lodash";
 import Logger from "../utils/logger";
 
 import { IPetitionItem } from "../types/petitions.types";
