@@ -23,3 +23,5 @@ class App {
 		this.app.use(cookieParser());
 	}
 }
+
+export default App;
