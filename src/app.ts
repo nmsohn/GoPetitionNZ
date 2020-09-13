@@ -6,12 +6,15 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import PetitionsRoutes from "./routes/petitionsRoutes";
+import * as http from "http";
+import * as dotenv from "dotenv";
 
 class App {
 	public app: Application;
 	public petitionRouter: PetitionsRoutes;
 
 	constructor() {
+		dotenv.config();
 		this.app = express();
 		this.middleware();
 		this.petitionRouter = new PetitionsRoutes();
@@ -32,8 +35,9 @@ class App {
 	}
 
 	public start(): void {
-		this.app.listen(this.app.get("port"), () => {
-			console.log("Server is listening on port", this.app.get("port"));
+		const port = process.env.PORT || 8080;
+		this.app.listen(port, () => {
+			console.log(`Server is listening on port ${port}`);
 		});
 	}
 }
