@@ -7,14 +7,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import PetitionsRoutes from "./routes/petitionsRoutes";
 import * as http from "http";
-import * as dotenv from "dotenv";
+import Config from "./utils/config";
 
 class App {
 	public app: Application;
 	public petitionRouter: PetitionsRoutes;
 
 	constructor() {
-		dotenv.config();
 		this.app = express();
 		this.middleware();
 		this.petitionRouter = new PetitionsRoutes();
@@ -35,7 +34,7 @@ class App {
 	}
 
 	public start(): void {
-		const port = process.env.PORT || 8080;
+		const port = new Config().getPort();
 		this.app.listen(port, () => {
 			console.log(`Server is listening on port ${port}`);
 		});
