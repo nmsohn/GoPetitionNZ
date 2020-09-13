@@ -18,7 +18,7 @@ export class Logger implements ILogger {
 		const options = {
 			file: {
 				level: "info",
-				filename: "",
+				filename: "info.log",
 				handleExceptions: true,
 				json: true,
 				maxFiles: 2,
