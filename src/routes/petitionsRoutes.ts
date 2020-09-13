@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import getPetitionItem from "../lib/getPetitionItem";
 
 class PetitionsRoutes {
-	private router: Router;
+	public router: Router;
 
 	constructor() {
 		this.router = Router();
@@ -10,7 +10,7 @@ class PetitionsRoutes {
 	}
 
 	private init() {
-		this.router.get("/petition/:id", this.getOne);
+		this.router.get("/:id", this.getOne);
 	}
 
 	private async getOne(req: Request, res: Response): Promise<void> {
