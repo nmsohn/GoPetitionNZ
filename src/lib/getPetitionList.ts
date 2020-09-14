@@ -14,13 +14,13 @@ const getPetitionList = async (status: string = "all"): Promise<IPetitionList | 
 	try {
 		switch (status) {
 			case "open":
-				return getOpenPetitions();
+				return await getOpenPetitions();
 			case "closed":
-				return getClosedPetitions();
+				return await getClosedPetitions();
 			case "presented":
-				return getPresentedPetitions();
+				return await getPresentedPetitions();
 			case "all":
-				return getAllPetitions();
+				return await getAllPetitions();
 		}
 		return undefined;
 	} catch (err) {
@@ -34,19 +34,19 @@ const getPetitionList = async (status: string = "all"): Promise<IPetitionList | 
 const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 	let totalList: IPetitionItem[] = [];
 	let totalNumber: number = 0;
-	getOpenPetitions().then((resolve) => {
+	await getOpenPetitions().then((resolve) => {
 		totalNumber += resolve?.totalNumber ?? 0;
 		if (resolve?.petitions) {
 			totalList.concat(resolve?.petitions);
 		}
 	});
-	getClosedPetitions().then((resolve) => {
+	await getClosedPetitions().then((resolve) => {
 		totalNumber += resolve?.totalNumber ?? 0;
 		if (resolve?.petitions) {
 			totalList.concat(resolve?.petitions);
 		}
 	});
-	getPresentedPetitions().then((resolve) => {
+	await getPresentedPetitions().then((resolve) => {
 		totalNumber += resolve?.totalNumber ?? 0;
 		if (resolve?.petitions) {
 			totalList.concat(resolve?.petitions);
@@ -62,19 +62,19 @@ const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 const getOpenPetitions = async (): Promise<IPetitionList | undefined> => {
 	let URL = `https://www.parliament.nz/en/pb/petitions/open?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
-	return createPetitionList(URL);
+	return await createPetitionList(URL);
 };
 
 const getClosedPetitions = async (): Promise<IPetitionList | undefined> => {
 	let URL = `https://www.parliament.nz/en/pb/petitions/closed?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
-	return createPetitionList(URL);
+	return await createPetitionList(URL);
 };
 
 const getPresentedPetitions = async (): Promise<IPetitionList | undefined> => {
 	let URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
-	return createPetitionList(URL);
+	return await createPetitionList(URL);
 };
 
 const createPetitionList = async (URL: string) => {
@@ -103,7 +103,7 @@ const createPetitionList = async (URL: string) => {
 				.replace(/.*\/PET_(.*)\/.*/, "$1");
 
 			if (id) {
-				getPetitionItem(Number(id))
+				await getPetitionItem(Number(id))
 					.then((resolve) => {
 						item = resolve;
 					})
