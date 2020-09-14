@@ -8,3 +8,8 @@ export interface IPetitionItem {
 	closingDate: string;
 	requester: string;
 }
+
+export interface IPetitionList {
+	totalNumber: number;
+	petitions: IPetitionItem[];
+}
