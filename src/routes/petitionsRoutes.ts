@@ -14,7 +14,7 @@ class PetitionsRoutes {
 	}
 
 	private async getOne(req: Request, res: Response): Promise<void> {
-		let query = Number(req.params.id);
+		let query = req.params.id;
 		const petition = await getPetitionItem(Number(query));
 		res.json(petition);
 	}
