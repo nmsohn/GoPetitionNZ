@@ -60,24 +60,24 @@ const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 };
 
 const getOpenPetitions = async (): Promise<IPetitionList | undefined> => {
-	let URL = `https://www.parliament.nz/en/pb/petitions/open?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
+	const URL = `https://www.parliament.nz/en/pb/petitions/open?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
 	return await createPetitionList(URL);
 };
 
 const getClosedPetitions = async (): Promise<IPetitionList | undefined> => {
-	let URL = `https://www.parliament.nz/en/pb/petitions/closed?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
+	const URL = `https://www.parliament.nz/en/pb/petitions/closed?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
 	return await createPetitionList(URL);
 };
 
 const getPresentedPetitions = async (): Promise<IPetitionList | undefined> => {
-	let URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
+	const URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
 	return await createPetitionList(URL);
 };
 
-const createPetitionList = async (URL: string) => {
+const createPetitionList = async (URL: string): Promise<IPetitionList | undefined> => {
 	let temp = [];
 	let list: IPetitionItem[] = [];
 	let item: IPetitionItem | undefined;
