@@ -35,7 +35,8 @@ class App {
 
 	public start(): void {
 		const port = new Config().getPort();
-		this.app.listen(port, () => {
+		this.app.set("PORT", 8081 || process.env.PORT);
+		this.app.listen(this.app.get("PORT"), () => {
 			console.log(`Server is listening on port ${port}`);
 		});
 	}
