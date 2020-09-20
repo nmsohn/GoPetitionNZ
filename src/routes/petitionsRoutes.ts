@@ -12,10 +12,10 @@ class PetitionsRoutes {
 
 	private init() {
 		this.router.get("/:id", this.getOne);
-		this.router.get("/:status", this.getAll);
+		this.router.get("/:status", this.getList);
 	}
 
-	private async getAll(req: Request, res: Response): Promise<void> {
+	private async getList(req: Request, res: Response): Promise<void> {
 		const petitions = await getPetitionList(req.params.status);
 		res.json(petitions);
 	}

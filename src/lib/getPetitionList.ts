@@ -10,7 +10,7 @@ import { isNil, omitBy } from "lodash";
 
 const logger = new Logger().init();
 
-const getPetitionList = async (status: string = "all"): Promise<IPetitionList | undefined> => {
+const getPetitionList = async (status: string = "open"): Promise<IPetitionList | undefined> => {
 	try {
 		switch (status) {
 			case "open":
@@ -31,7 +31,7 @@ const getPetitionList = async (status: string = "all"): Promise<IPetitionList | 
 	}
 };
 
-const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
+export const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 	let totalList: IPetitionItem[] = [];
 	let totalNumber: number = 0;
 	await getOpenPetitions().then((resolve) => {
@@ -59,25 +59,25 @@ const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 	};
 };
 
-const getOpenPetitions = async (): Promise<IPetitionList | undefined> => {
+export const getOpenPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/open?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
 	return await createPetitionList(URL);
 };
 
-const getClosedPetitions = async (): Promise<IPetitionList | undefined> => {
+export const getClosedPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/closed?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
 	return await createPetitionList(URL);
 };
 
-const getPresentedPetitions = async (): Promise<IPetitionList | undefined> => {
+export const getPresentedPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
 	return await createPetitionList(URL);
 };
 
-const createPetitionList = async (URL: string): Promise<IPetitionList | undefined> => {
+export const createPetitionList = async (URL: string): Promise<IPetitionList | undefined> => {
 	let temp = [];
 	let list: IPetitionItem[] = [];
 	let item: IPetitionItem | undefined;
@@ -115,7 +115,10 @@ const createPetitionList = async (URL: string): Promise<IPetitionList | undefine
 			}
 
 			temp.push(item);
-			omitNil(temp).map((i: IPetitionItem) => list.push(i));
+			let cleaned = omitNil(temp);
+			Object.values(cleaned).map((i) => {
+				list.push(i);
+			});
 		}
 		return {
 			totalNumber: total,
