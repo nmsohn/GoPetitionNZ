@@ -6,4 +6,4 @@ A web scraped API that provides online petitions in NZ
 - [ ] getItemList fix
 - [ ] Performance enhancement using cache
 - [ ] Swagger
-- [ ] Unit tests
+- [x] Unit tests
