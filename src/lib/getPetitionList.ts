@@ -14,13 +14,13 @@ const getPetitionList = async (status: string = "open"): Promise<IPetitionList |
 	try {
 		switch (status) {
 			case "open":
-				return await getOpenPetitions();
+				return getOpenPetitions();
 			case "closed":
-				return await getClosedPetitions();
+				return getClosedPetitions();
 			case "presented":
-				return await getPresentedPetitions();
+				return getPresentedPetitions();
 			case "all":
-				return await getAllPetitions();
+				return getAllPetitions();
 		}
 		return undefined;
 	} catch (err) {
@@ -34,24 +34,24 @@ const getPetitionList = async (status: string = "open"): Promise<IPetitionList |
 export const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 	let totalList: IPetitionItem[] = [];
 	let totalNumber: number = 0;
-	await getOpenPetitions().then((resolve) => {
-		totalNumber += resolve?.totalNumber ?? 0;
-		if (resolve?.petitions) {
-			totalList.concat(resolve?.petitions);
-		}
-	});
-	await getClosedPetitions().then((resolve) => {
-		totalNumber += resolve?.totalNumber ?? 0;
-		if (resolve?.petitions) {
-			totalList.concat(resolve?.petitions);
-		}
-	});
-	await getPresentedPetitions().then((resolve) => {
-		totalNumber += resolve?.totalNumber ?? 0;
-		if (resolve?.petitions) {
-			totalList.concat(resolve?.petitions);
-		}
-	});
+	let openPetitions: IPetitionList | undefined = await getOpenPetitions();
+	let closedPetitions: IPetitionList | undefined = await getClosedPetitions();
+	let presentedPetitions: IPetitionList | undefined = await getPresentedPetitions();
+
+	if(openPetitions?.petitions){
+		totalList.concat(openPetitions?.petitions);
+		totalNumber += openPetitions?.totalNumber;
+	}
+
+	if(closedPetitions?.petitions){
+		totalList.concat(closedPetitions?.petitions);
+		totalNumber += closedPetitions?.totalNumber;
+	}
+
+	if(presentedPetitions?.petitions){
+		totalList.concat(presentedPetitions?.petitions);
+		totalNumber += presentedPetitions?.totalNumber;
+	}
 
 	return {
 		totalNumber: totalNumber,
@@ -62,19 +62,19 @@ export const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 export const getOpenPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/open?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
-	return await createPetitionList(URL);
+	return createPetitionList(URL);
 };
 
 export const getClosedPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/closed?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
-	return await createPetitionList(URL);
+	return createPetitionList(URL);
 };
 
 export const getPresentedPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 
-	return await createPetitionList(URL);
+	return createPetitionList(URL);
 };
 
 export const createPetitionList = async (URL: string): Promise<IPetitionList | undefined> => {
