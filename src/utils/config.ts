@@ -16,7 +16,7 @@ class Config implements IConfig {
 	}
 
 	public getPort(): string {
-		const port = process.env.PORT ?? "8080";
+		const port = process.env.PORT ?? "3000";
 		return port;
 	}
 }

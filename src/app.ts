@@ -21,7 +21,15 @@ class App {
 	}
 
 	private middleware(): void {
-		this.app.use(cors());
+		this.app.use(function(req, res, next) {
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+			res.header("Access-Control-Allow-Headers", "x-access-token, Origin, X-Requested-With, Content-Type, Accept");
+			next();
+		  });
+		this.app.use(cors({
+    		credentials: true
+		}));
 		this.app.use(morgan("combined", { stream: new LogStream() }));
 		this.app.use(bodyParser.json());
 		this.app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,7 +43,7 @@ class App {
 
 	public start(): void {
 		const port = new Config().getPort();
-		this.app.set("PORT", 8081 || process.env.PORT);
+		this.app.set("PORT", process.env.PORT || 3000);
 		this.app.listen(this.app.get("PORT"), () => {
 			console.log(`Server is listening on port ${port}`);
 		});
