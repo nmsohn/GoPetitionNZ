@@ -6,10 +6,10 @@ describe('Get a petition item', () => {
         const petition: IPetitionItem | undefined = await getPetitionItem(99776);
 
         if(petition){
-            expect(typeof petition).toBe('IPetitionItem');
+            expect(typeof petition).toBe('object');
             expect(petition.documentId).toEqual('PET_99776');
             expect(petition.requester).toEqual('Kim Hyunwoo');
-            expect(petition.status).toEqual('open');
+            expect(petition.status).toEqual('Closed');
             expect(petition.signatures).toEqual(3);
             expect(petition.title).toEqual('Express concern to South Korea at actions of diplomat')
             expect(typeof petition.startDate).toBe('string');
