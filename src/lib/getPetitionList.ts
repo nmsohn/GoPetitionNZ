@@ -3,7 +3,6 @@ import cheerio from "cheerio";
 import Logger from "../utils/logger";
 
 import { IPetitionItem, IPetitionList } from "../types/petitions.types";
-import userAgent from "../config/userAgent.json";
 import getPetitionItem from "./getPetitionItem";
 
 import { isNil, omitBy } from "lodash";
@@ -31,6 +30,7 @@ const getPetitionList = async (status: string = "open"): Promise<IPetitionList |
 	}
 };
 
+//NOTE: Combine all petition lists
 export const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 	let totalList: IPetitionItem[] = [];
 	let totalNumber: number = 0;
