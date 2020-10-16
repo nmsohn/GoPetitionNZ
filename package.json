@@ -23,7 +23,7 @@
 	"scripts": {
 		"start": "tsc && node dist/server.js",
 		"dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
-		"test": "jest"
+		"test": "jest --env=node"
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",

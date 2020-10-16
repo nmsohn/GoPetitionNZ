@@ -83,9 +83,7 @@ export const createPetitionList = async (URL: string): Promise<IPetitionList | u
 	let item: IPetitionItem | undefined;
 
 	try {
-		let response = await axios.get(URL, {
-			headers: userAgent
-		});
+		let response = await axios.get(URL);
 
 		let htmlData = response.data;
 		let $ = cheerio.load(htmlData);
