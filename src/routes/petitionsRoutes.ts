@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import getPetitionItem from "../lib/getPetitionItem";
 import getPetitionList from "../lib/getPetitionList";
+import Cache from "../utils/cache";
 
 class PetitionsRoutes {
 	public router: Router;
@@ -16,8 +17,13 @@ class PetitionsRoutes {
 	}
 
 	private async getList(req: Request, res: Response): Promise<void> {
-		const petitions = await getPetitionList(req.params.status);
-		res.json(petitions);
+		const cacheKey = `petitions::${req.params.status || "all"}`;
+		const ttl = 1 * 60 * 60; // 1 hr
+		const nodeCache = new Cache(ttl);
+		// const petitions = await getPetitionList(req.params.status);
+		const cachedData = nodeCache.get(cacheKey, getPetitionList, req.params.status);
+
+		res.json(cachedData);
 	}
 
 	private async getOne(req: Request, res: Response): Promise<void> {

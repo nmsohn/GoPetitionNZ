@@ -3,7 +3,6 @@ import cheerio, { html } from "cheerio";
 import Logger from "../utils/logger";
 
 import { IPetitionItem } from "../types/petitions.types";
-import userAgent from "../config/userAgent.json";
 
 const logger = new Logger().init();
 
