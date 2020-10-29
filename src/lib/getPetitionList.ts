@@ -9,7 +9,7 @@ import { isNil, omitBy } from "lodash";
 
 const logger = new Logger().init();
 
-const getPetitionList = async (status: string = "open"): Promise<IPetitionList | undefined> => {
+const getPetitionList = async (status: string = "all"): Promise<IPetitionList | undefined> => {
 	try {
 		switch (status) {
 			case "open":
