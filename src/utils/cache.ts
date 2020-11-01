@@ -18,7 +18,6 @@ class Cache{
         }
         
         //if not cached, store data
-        //this.cache.set(key, data);
         return func(param || undefined).then((result: any) => {
             this.cache.set(key, result);
             return result;

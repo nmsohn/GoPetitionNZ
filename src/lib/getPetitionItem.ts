@@ -1,15 +1,19 @@
 import axios from "axios";
 import cheerio, { html } from "cheerio";
 import Logger from "../utils/logger";
-
+import userAgent from "../config/userAgent.json";
 import { IPetitionItem } from "../types/petitions.types";
 
 const logger = new Logger().init();
 
 const getPetitionItem = async (id: number): Promise<IPetitionItem | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/document/PET_${id}`;
+	const options = {
+		headers: userAgent,
+		timeout: 30000
+	};
 	try {
-		let response = await axios.get(URL);
+		let response = await axios.get(URL, options);
 		let htmlData = response.data;
 		let $ = cheerio.load(htmlData);
 

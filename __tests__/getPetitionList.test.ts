@@ -12,9 +12,9 @@ describe('Get a petition list', () => {
         const petitions: IPetitionList | undefined = await getPetitionList(status);
 
         if(petitions){
-            expect(typeof petitions).toBe('IPetitionList');
-            expect(petitions.totalNumber).toEqual(139);
-            expect(petitions.petitions.length).toEqual(139);
+            expect(typeof petitions).toBe('object');
+            expect(petitions.totalNumber).toEqual(121);
+            expect(petitions.petitions.length).toEqual(121);
         }
-    });
+    }, 30000);
 });

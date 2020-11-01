@@ -1,7 +1,7 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import Logger from "../utils/logger";
-
+import userAgent from "../config/userAgent.json";
 import { IPetitionItem, IPetitionList } from "../types/petitions.types";
 import getPetitionItem from "./getPetitionItem";
 
@@ -81,9 +81,13 @@ export const createPetitionList = async (URL: string): Promise<IPetitionList | u
 	let temp = [];
 	let list: IPetitionItem[] = [];
 	let item: IPetitionItem | undefined;
+	const options = {
+		headers: userAgent,
+		timeout: 30000
+	};
 
 	try {
-		let response = await axios.get(URL);
+		let response = await axios.get(URL, options);
 
 		let htmlData = response.data;
 		let $ = cheerio.load(htmlData);

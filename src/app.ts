@@ -6,7 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import PetitionsRoutes from "./routes/petitionsRoutes";
-import * as http from "http";
+// import * as http from "http";
 import Config from "./utils/config";
 
 class App {
