@@ -26,7 +26,7 @@
     "produces": [
         "application/json"
     ],
-    "path": {
+    "paths": {
         "/petitions/{:id}": {
             "parameters": [
                 {
@@ -69,7 +69,7 @@
                 {
                     "name": "status",
                     "in": "path",
-                    "required": false,
+                    "required": true,
                     "description": "List of petitions with given status. Default to 'open'",
                     "type": "string"
                 },
