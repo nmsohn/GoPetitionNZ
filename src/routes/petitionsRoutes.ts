@@ -17,12 +17,13 @@ class PetitionsRoutes {
 	}
 
 	private async getList(req: Request, res: Response): Promise<void> {
-		const cacheKey = `petitions::${req.params.status || "all"}`;
+		let status = req.params.status;
+		const cacheKey = `petitions::${status|| "all"}`;
 		const ttl = 1 * 60 * 60; // 1 hr
 		const nodeCache = new Cache(ttl);
-		// const petitions = await getPetitionList(req.params.status);
-		const cachedData = nodeCache.get(cacheKey, getPetitionList, req.params.status);
-
+		let page = req.query.page ? Number(req.query.page) : 1;
+		let params = {status, page}
+		const cachedData = nodeCache.get(cacheKey, getPetitionList, params);
 		res.json(cachedData);
 	}
 
