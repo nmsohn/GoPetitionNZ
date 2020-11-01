@@ -12,7 +12,6 @@ describe('Get a petition item', () => {
             expect(petition.status).toEqual('Closed');
             expect(petition.signatures).toEqual(3);
             expect(petition.title).toEqual('Express concern to South Korea at actions of diplomat')
-            expect(typeof petition.startDate).toBe('string');
             expect(typeof petition.closingDate).toBe('string');
         }
     });

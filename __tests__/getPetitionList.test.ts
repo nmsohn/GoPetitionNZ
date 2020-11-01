@@ -8,13 +8,13 @@ describe('Get a petition list', () => {
         jest.clearAllTimers();
       });
     test('Return open petitions', async() => {
-        const status = 'open';
+        const status = 'all';
         const petitions: IPetitionList | undefined = await getPetitionList(status);
 
         if(petitions){
-            expect(typeof petitions).toBe('IPetitionList');
-            expect(petitions.totalNumber).toEqual(139);
-            expect(petitions.petitions.length).toEqual(139);
+            expect(typeof petitions).toBe('object');
+            expect(petitions.totalNumber).toEqual(121);
+            expect(petitions.petitions.length).toEqual(121);
         }
-    });
+    }, 30000);
 });

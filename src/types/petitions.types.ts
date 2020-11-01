@@ -4,7 +4,6 @@ export interface IPetitionItem {
 	title: string;
 	signatures: number;
 	documentId: string;
-	startDate: string;
 	closingDate: string;
 	requester: string;
 }

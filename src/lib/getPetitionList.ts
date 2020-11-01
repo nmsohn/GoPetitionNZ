@@ -1,15 +1,12 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import Logger from "../utils/logger";
-
+import userAgent from "../config/userAgent.json";
 import { IPetitionItem, IPetitionList } from "../types/petitions.types";
-import getPetitionItem from "./getPetitionItem";
-
-import { isNil, omitBy } from "lodash";
 
 const logger = new Logger().init();
 
-const getPetitionList = async (status: string = "all"): Promise<IPetitionList | undefined> => {
+const getPetitionList = async (status: string = "open"): Promise<IPetitionList | undefined> => {
 	try {
 		switch (status) {
 			case "open":
@@ -61,29 +58,35 @@ export const getAllPetitions = async (): Promise<IPetitionList | undefined> => {
 
 export const getOpenPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/open?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
+	const status = "open";
 
-	return await createPetitionList(URL);
+	return await createPetitionList(URL, status);
 };
 
 export const getClosedPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/closed?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
+	const status = "closed";
 
-	return await createPetitionList(URL);
+	return await createPetitionList(URL, status);
 };
 
 export const getPresentedPetitions = async (): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
+	const status = "presented";
 
-	return await createPetitionList(URL);
+	return await createPetitionList(URL, status);
 };
 
-export const createPetitionList = async (URL: string): Promise<IPetitionList | undefined> => {
+export const createPetitionList = async (URL: string, status: string): Promise<IPetitionList | undefined> => {
 	let temp = [];
 	let list: IPetitionItem[] = [];
-	let item: IPetitionItem | undefined;
+	const options = {
+		headers: userAgent,
+		timeout: 30000
+	};
 
 	try {
-		let response = await axios.get(URL);
+		let response = await axios.get(URL, options);
 
 		let htmlData = response.data;
 		let $ = cheerio.load(htmlData);
@@ -99,24 +102,23 @@ export const createPetitionList = async (URL: string): Promise<IPetitionList | u
 				.attr("href")
 				?.toString()
 				.replace(/.*\/PET_(.*)\/.*/, "$1");
+			let title = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*\:(.*)/, "$1").trim();
+			let signatures = Number($(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim());
+			let documentId = id ? "PET_".concat(id.toString()) : "unknown";
+			let closingDate =  $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim();
+			let requester = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*f\s(.*)\:.*/, "$1");
 
-			if (id) {
-				await getPetitionItem(Number(id))
-					.then((resolve) => {
-						item = resolve;
-					})
-					.catch((reject) => {
-						console.log(reject);
-					});
-			} else {
-				item = undefined;
+			let item = {
+				id: Number(id),
+				status: status,
+				title: title,
+				signatures: signatures,
+				documentId: documentId,
+				closingDate: closingDate,
+				requester: requester
 			}
 
-			temp.push(item);
-			let cleaned = omitNil(temp);
-			Object.values(cleaned).map((i) => {
-				list.push(i);
-			});
+			list.push(item);
 		}
 		return {
 			totalNumber: total,
@@ -128,10 +130,6 @@ export const createPetitionList = async (URL: string): Promise<IPetitionList | u
 			message: err
 		});
 	}
-};
-
-const omitNil = (object: any[]) => {
-	return omitBy(object, isNil);
 };
 
 export default getPetitionList;
