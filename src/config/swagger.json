@@ -8,5 +8,162 @@
             "name": "MIT",
             "url": "https://opensource.org/licenses/MIT"
         }
+    },
+    "servers": [
+        {
+            "url": "/api/v1/"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Petitions",
+            "description": "API for petitions in NZ"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "path": {
+        "/petitions/{:id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the petition that you want to find",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": ["petitions"],
+                "summary": "Get petition with given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "ID of the petition that you want to find",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Petition"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Petition not found."
+                    }
+                }
+            }
+        },
+        "/petitions/{:status}": {
+            "parameters": [
+                {
+                    "name": "status",
+                    "in": "path",
+                    "required": false,
+                    "description": "List of petitions with given status. Default to 'open'",
+                    "type": "string"
+                },
+                {
+                    "name": "page",
+                    "in": "query",
+                    "type": "integer",
+                    "description": "Page number. Each page gets 50 items at maximum. Default to 1",
+                    "required": false
+                  }
+            ],
+            "get": {
+                "tags": ["petitions"],
+                "summary": "Get petitions with given status",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "status",
+                        "required": true,
+                        "description": "Status of petitions",
+                        "schema": {
+                            "$ref": "#/definitions/status"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Petitions"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Petition not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "id": {
+            "type": "integer"
+        },
+        "status": {
+            "type": "string"
+        },
+        "Petition": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "signatures": {
+                    "type": "boolean"
+                },
+                "documentId": {
+                    "type": "string"
+                },
+                "closingDate": {
+                    "type": "string"
+                },
+                "requester": {
+                    "type": "string"
+                }
+            }
+        },
+        "Petitions": {
+            "type": "object",
+            "properties": {
+                "currentPage": {
+                    "type": "integer"
+                },
+                "counterPerPage": {
+                    "type": "integer"
+                },
+                "totalPage": {
+                    "type": "integer"
+                },
+                "totalNumber": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "petitions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Petition"
+                    }
+                }
+            }
+        }
     }
 }
