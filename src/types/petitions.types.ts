@@ -9,6 +9,15 @@ export interface IPetitionItem {
 }
 
 export interface IPetitionList {
+	currentPage?: number;
+	countPerPage?: number;
+	status?: string;
+	totalPage?: number;
 	totalNumber: number;
 	petitions: IPetitionItem[];
+}
+
+export interface IPetitionListParam {
+	status?: string;
+	page?: number;
 }

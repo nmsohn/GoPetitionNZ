@@ -9,7 +9,7 @@ class Cache{
         this.cache = new NodeCache({stdTTL: ttl, checkperiod: ttl * 0.2, useClones: false});
     }
 
-    public get(key: NodeCache.Key, func: Function, param: any) : any {
+    public get(key: NodeCache.Key, func: Function, params: any) : any {
         const value = this.cache.get(key);
         console.log("myStringCache:", value);
         //if cached data
@@ -19,8 +19,9 @@ class Cache{
         }
         
         //if not cached, store data
-        return func(param || undefined).then((result: any) => {
-            this.cache.set(key, result);
+        return func(params).then((result: any) => {
+            let success = this.cache.set(key, result);
+            console.log(success);
             return result;
         });
     }
