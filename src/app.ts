@@ -6,8 +6,9 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import PetitionsRoutes from "./routes/petitionsRoutes";
-// import * as http from "http";
+import swaggerUi from "swagger-ui-express";
 import Config from "./utils/config";
+import * as swaggerDocument from './config/swagger.json';
 
 class App {
 	public app: Application;
@@ -27,6 +28,7 @@ class App {
 		this.app.use(bodyParser.urlencoded({ extended: false }));
 		this.app.use(helmet());
 		this.app.use(cookieParser());
+		this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 	}
 
 	private routes(): void {
