@@ -6,11 +6,12 @@ class Cache{
 
     constructor(ttl : number)
     {
-        this.cache = new NodeCache({stdTTL: ttl, checkperiod: ttl * 0.2, useClones = false});
+        this.cache = new NodeCache({stdTTL: ttl, checkperiod: ttl * 0.2, useClones: false});
     }
 
     public get(key: NodeCache.Key, func: Function, param: any) : any {
         const value = this.cache.get(key);
+        console.log("myStringCache:", value);
         //if cached data
         if(value)
         {

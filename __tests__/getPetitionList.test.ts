@@ -8,7 +8,7 @@ describe('Get a petition list', () => {
         jest.clearAllTimers();
       });
     test('Return open petitions', async() => {
-        const status = 'open';
+        const status = 'all';
         const petitions: IPetitionList | undefined = await getPetitionList(status);
 
         if(petitions){

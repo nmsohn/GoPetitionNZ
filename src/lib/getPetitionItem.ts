@@ -32,11 +32,6 @@ const getPetitionItem = async (id: number): Promise<IPetitionItem | undefined> =
 
 		const documentId = "PET_".concat(id.toString());
 
-		const startDate = $("span.publish-date")
-			.text()
-			.replace(/.*\:(.*)/, "$1")
-			.trim();
-
 		const closingDate = $("table.variablelist > tbody > tr:nth-child(2) > td").text().trim();
 
 		return {
@@ -45,7 +40,6 @@ const getPetitionItem = async (id: number): Promise<IPetitionItem | undefined> =
 			title: title,
 			documentId: documentId,
 			status: status,
-			startDate: startDate,
 			closingDate: closingDate,
 			signatures: signatures
 		};
