@@ -1,5 +1,5 @@
 # GoPetitionNZ
-A web scraped API that provides online petitions in NZ
+A web scraped API that provides online petitions data in NZ
 
 # API
 ## GET /api/v1/petitions/:status
