@@ -77,3 +77,4 @@ URL params
 - [ ] 404 page
 - [ ] index page
 - [ ] husky, linting
+- [ ] TravisCI
