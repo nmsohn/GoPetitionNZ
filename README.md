@@ -78,3 +78,4 @@ URL params
 - [ ] index page
 - [ ] husky, linting
 - [ ] TravisCI
+- [ ] Clean dependencies
