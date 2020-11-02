@@ -81,7 +81,6 @@ export const createPetitionList = async (URL: string, status: string, page: numb
 			totalPage: count,
 			totalNumber: total,
 			petitions: list
-
 		}
 	
 	} catch (err) {

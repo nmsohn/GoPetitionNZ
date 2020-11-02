@@ -13,6 +13,7 @@ describe('Get a petition item', () => {
             expect(petition.signatures).toEqual(3);
             expect(petition.title).toEqual('Express concern to South Korea at actions of diplomat')
             expect(typeof petition.closingDate).toBe('string');
+            expect(petition.closingDate).toEqual('21 Sep 2020');
         }
     });
 });
