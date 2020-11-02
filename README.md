@@ -64,7 +64,7 @@ URL params
 ```
 
 ## Swagger document /swagger
-
+![](swagger.png);
 
 # 📌v1.0
 ## TODO
