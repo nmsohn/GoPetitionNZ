@@ -63,7 +63,7 @@ URL params
 ```
 
 ## Swagger document /swagger
-![](swagger.png)
+![screenshot](swagger.png)
 
 # 📌v1.0
 ## TODO
@@ -73,4 +73,7 @@ URL params
 - [x] Performance enhancement using cache
 - [x] Swagger
 - [x] Unit tests
-- [ ] Deployment
+- [x] Deployment
+- [ ] 404 page
+- [ ] index page
+- [ ] husky, linting
