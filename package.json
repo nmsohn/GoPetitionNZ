@@ -26,7 +26,7 @@
 		"winston": "^3.3.3"
 	},
 	"scripts": {
-		"start": "ts-node src/server.ts",
+		"start": "ts-node ./src/server.ts",
 		"dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
 		"test": "jest --env=node",
 		"postinstall": "tsc && rm -v -rf src"
