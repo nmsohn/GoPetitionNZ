@@ -20,14 +20,18 @@
 		"morgan": "^1.10.0",
 		"node-cache": "^5.1.2",
 		"swagger-ui-express": "^4.1.4",
+		"ts-node": "^9.0.0",
+		"tsc": "^1.20150623.0",
+		"typescript": "^4.0.5",
 		"winston": "^3.3.3"
 	},
 	"scripts": {
-		"start": "tsc && node dist/server.js",
+		"start": "ts-node src/server.ts",
 		"build": "tsc --build",
 		"clean": "tsc --build --clean",
 		"dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
-		"test": "jest --env=node"
+		"test": "jest --env=node",
+		"postinstall": "tsc && rm -v -rf src"
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
@@ -47,9 +51,6 @@
 		"jest": "^26.4.2",
 		"nodemon": "^2.0.4",
 		"ts-jest": "^26.3.0",
-		"ts-node": "^9.0.0",
-		"tsc": "^1.20150623.0",
-		"tslint": "^6.1.3",
-		"typescript": "^4.0.2"
+		"tslint": "^6.1.3"
 	}
 }
