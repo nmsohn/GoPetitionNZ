@@ -7,7 +7,6 @@ A web scraped API that provides online petitions in NZ
 
 ### Request
 URL params
-
 |params|type|description|required|
 |------|----|-----------|--------|
 |status|string|Petition status. Can be open, closed, presented|Optional. Default = open|
@@ -64,7 +63,7 @@ URL params
 ```
 
 ## Swagger document /swagger
-![](swagger.png);
+![](swagger.png)
 
 # 📌v1.0
 ## TODO

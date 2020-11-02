@@ -32,7 +32,7 @@ class App {
 	}
 
 	private routes(): void {
-		this.app.use("/api/v1/petitions", this.petitionRouter.router);
+		this.app.use("/api/v1", this.petitionRouter.router);
 	}
 
 	public start(): void {

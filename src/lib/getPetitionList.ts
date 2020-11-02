@@ -104,7 +104,7 @@ const crawlList = async ($: CheerioStatic, start:number, end:number, status: str
 		let signatures = Number($(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim());
 		let documentId = id ? "PET_".concat(id.toString()) : "unknown";
 		let closingDate =  $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim();
-		let requester = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*f\s(.*)\:.*/, "$1");
+		let requester = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*f\s(.*)\:.*/, "$1").trim();
 
 		let item = {
 			id: Number(id),

@@ -24,6 +24,8 @@
 	},
 	"scripts": {
 		"start": "tsc && node dist/server.js",
+		"build": "tsc --build",
+		"clean": "tsc --build --clean",
 		"dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
 		"test": "jest --env=node"
 	},
