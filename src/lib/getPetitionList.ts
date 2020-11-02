@@ -72,7 +72,7 @@ export const createPetitionList = async (URL: string, status: string, page: numb
 
 		const offset = helper.getOffset(page) + 1;
 		const count = helper.getNumberOfPage(total);
-		const end = (offset + limit) <= total ? offset + limit : total; 
+		const end = (offset + limit) <= total ? offset + limit : total +1;
 		list = await crawlList($, offset, end, status);
 		return {
 			status: status,
@@ -95,7 +95,7 @@ const crawlList = async ($: CheerioStatic, start:number, end:number, status: str
 	let list: IPetitionItem[] = [];
 	let temp = [];
 
-	for (let t = start; t <= end; t++) {
+	for (let t = start; t < end; t++) {
 		let id = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1) > div > a`)
 			.attr("href")
 			?.toString()

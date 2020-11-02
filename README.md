@@ -3,13 +3,13 @@ A web scraped API that provides online petitions in NZ
 
 # API
 ## GET /api/v1/petitions/:status
-- This fetches a list of petitions with the given status. By default, it sets to "open"
+- This fetches a list of petitions with the given status.
 
 ### Request
 URL params
 |params|type|description|required|
 |------|----|-----------|--------|
-|status|string|Petition status. Can be open, closed, presented|Optional. Default = open|
+|status|string|Petition status. Can be open, closed, presented|Required|
 
 Query params
 |params|type|description|required|
