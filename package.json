@@ -1,10 +1,23 @@
 {
-	"name": "GoPetitionNZ",
+	"name": "petitions-nz",
 	"version": "1.0.0",
 	"main": "index.ts",
 	"author": "nmsohn <odna425@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
+		"@types/axios": "^0.14.0",
+		"@types/body-parser": "^1.19.0",
+		"@types/cheerio": "^0.22.22",
+		"@types/cookie-parser": "^1.4.2",
+		"@types/cors": "^2.8.8",
+		"@types/express": "^4.17.8",
+		"@types/helmet": "^4.0.0",
+		"@types/lodash": "^4.14.164",
+		"@types/memory-cache": "^0.2.1",
+		"@types/morgan": "^1.9.2",
+		"@types/node": "^14.14.6",
+		"@types/swagger-ui-express": "^4.1.2",
+		"@types/winston": "^2.4.4",
 		"axios": "^0.20.0",
 		"body-parser": "^1.19.0",
 		"cheerio": "^1.0.0-rc.3",
@@ -21,34 +34,20 @@
 		"node-cache": "^5.1.2",
 		"swagger-ui-express": "^4.1.4",
 		"ts-node": "^9.0.0",
-		"tsc": "^1.20150623.0",
 		"typescript": "^4.0.5",
 		"winston": "^3.3.3"
 	},
 	"scripts": {
 		"start": "ts-node ./src/server.ts",
-		"dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
-		"test": "jest --env=node",
-		"postinstall": "tsc && rm -v -rf src"
+		"dev": "nodemon --watch './src/**/*.ts' --exec ts-node ./src/server.ts",
+		"test": "jest --env=node"
 	},
 	"devDependencies": {
-		"@types/axios": "^0.14.0",
-		"@types/body-parser": "^1.19.0",
-		"@types/cheerio": "^0.22.21",
-		"@types/cookie-parser": "^1.4.2",
-		"@types/cors": "^2.8.7",
-		"@types/express": "^4.17.7",
-		"@types/helmet": "^0.0.48",
 		"@types/jest": "^26.0.10",
-		"@types/lodash": "^4.14.161",
-		"@types/memory-cache": "^0.2.1",
-		"@types/morgan": "^1.9.1",
-		"@types/node": "^14.6.2",
-		"@types/swagger-ui-express": "^4.1.2",
-		"@types/winston": "^2.4.4",
 		"jest": "^26.4.2",
 		"nodemon": "^2.0.4",
 		"ts-jest": "^26.3.0",
+		"tsc": "^1.20150623.0",
 		"tslint": "^6.1.3"
 	}
 }

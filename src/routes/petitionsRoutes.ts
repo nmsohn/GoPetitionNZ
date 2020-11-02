@@ -13,6 +13,12 @@ class PetitionsRoutes {
 	}
 
 	private init() {
+		this.router.get('/', function(req, res, next) {
+			console.log(' hello heroku ');
+			res.send({
+				express: 'Your express backend is connected'
+			})
+		  });
 		this.router.get("/petition/:id", this.getOne);
 		this.router.get("/petitions/:status", this.getList);
 	}

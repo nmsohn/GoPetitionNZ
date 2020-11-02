@@ -91,7 +91,7 @@ export const createPetitionList = async (URL: string, status: string, page: numb
 	}
 };
 
-const crawlList = async ($: CheerioStatic, start:number, end:number, status: string) : Promise<IPetitionItem[]> => {
+const crawlList = async ($: any, start:number, end:number, status: string) : Promise<IPetitionItem[]> => {
 	let list: IPetitionItem[] = [];
 	let temp = [];
 
