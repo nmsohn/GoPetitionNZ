@@ -39,7 +39,7 @@ Query params
 }
 ```
 
-## GET /api/v1/petitions/:id
+## GET /api/v1/petition/:id
 - This fetches a petition item with the given id.
 
 ### Request
