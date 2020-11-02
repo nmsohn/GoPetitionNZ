@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import getPetitionItem from "../lib/getPetitionItem";
 import getPetitionList from "../lib/getPetitionList";
 import Cache from "../utils/cache";
+import {IPetitionList} from "../types/petitions.types";
 
 class PetitionsRoutes {
 	public router: Router;
@@ -12,18 +13,21 @@ class PetitionsRoutes {
 	}
 
 	private init() {
-		this.router.get("/:id", this.getOne);
-		this.router.get("/:status", this.getList);
+		this.router.get("/petition/:id", this.getOne);
+		this.router.get("/petitions/:status", this.getList);
 	}
 
 	private async getList(req: Request, res: Response): Promise<void> {
-		let status = req.params.status;
-		const cacheKey = `petitions::${status|| "all"}`;
-		const ttl = 1 * 60 * 60; // 1 hr
-		const nodeCache = new Cache(ttl);
+		let status = req.params.status ? req.params.status : "open";
 		let page = req.query.page ? Number(req.query.page) : 1;
 		let params = {status, page}
-		const cachedData = nodeCache.get(cacheKey, getPetitionList, params);
+
+		const cacheKey = `petitions::${status}`;
+		const ttl = 1 * 60 * 60; // 1 hr
+		const nodeCache = new Cache(ttl);
+
+		const cachedData: IPetitionList = await nodeCache.get(cacheKey, getPetitionList, params);
+
 		res.json(cachedData);
 	}
 
