@@ -106,7 +106,7 @@ const crawlList = async ($: any, start: number, end: number, status: string): Pr
 		let title = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*[\:\-]\s(.*)/, "$1").trim();
 		let signatures = Number($(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(4)`).text().trim());
 		let documentId = id ? "PET_".concat(id.toString()) : "unknown";
-		let closingDate = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim();
+		let closingDate = status == "open" ? $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim() : $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim();
 
 
 		let item = {
