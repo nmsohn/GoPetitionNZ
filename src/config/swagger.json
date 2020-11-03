@@ -27,7 +27,7 @@
         "application/json"
     ],
     "paths": {
-        "/petitions/{:id}": {
+        "/petition/{:id}": {
             "parameters": [
                 {
                     "name": "id",
