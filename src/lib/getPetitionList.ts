@@ -10,7 +10,7 @@ const limit = 50;
 const logger = new Logger().init();
 const helper = new Paginate(limit);
 
-const getPetitionList = async ({status = "open", page = 1}: IPetitionListParam = {}): Promise<IPetitionList | undefined> => {
+const getPetitionList = async ({ status = "open", page = 1 }: IPetitionListParam = {}): Promise<IPetitionList | undefined> => {
 	try {
 		switch (status) {
 			case "open":
@@ -72,17 +72,17 @@ export const createPetitionList = async (URL: string, status: string, page: numb
 
 		const offset = helper.getOffset(page) + 1;
 		const count = helper.getNumberOfPage(total);
-		const end = (offset + limit) <= total ? offset + limit : total +1;
+		const end = (offset + limit) <= total ? offset + limit : total + 1;
 		list = await crawlList($, offset, end, status);
 		return {
 			status: status,
-			currentPage:page,
+			currentPage: page,
 			countPerPage: list.length,
 			totalPage: count,
 			totalNumber: total,
 			petitions: list
 		}
-	
+
 	} catch (err) {
 		logger.log({
 			level: "error",
@@ -91,7 +91,7 @@ export const createPetitionList = async (URL: string, status: string, page: numb
 	}
 };
 
-const crawlList = async ($: any, start:number, end:number, status: string) : Promise<IPetitionItem[]> => {
+const crawlList = async ($: any, start: number, end: number, status: string): Promise<IPetitionItem[]> => {
 	let list: IPetitionItem[] = [];
 	let temp = [];
 
@@ -100,11 +100,14 @@ const crawlList = async ($: any, start:number, end:number, status: string) : Pro
 			.attr("href")
 			?.toString()
 			.replace(/.*\/PET_(.*)\/.*/, "$1");
-		let title = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*\:(.*)/, "$1").trim();
-		let signatures = Number($(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim());
+		let requester = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text()
+			.replace(/.*f\s(.*)[\:\-].*/, "$1")
+			.trim();
+		let title = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*[\:\-]\s(.*)/, "$1").trim();
+		let signatures = Number($(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(4)`).text().trim());
 		let documentId = id ? "PET_".concat(id.toString()) : "unknown";
-		let closingDate =  $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim();
-		let requester = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*f\s(.*)\:.*/, "$1").trim();
+		let closingDate = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim();
+
 
 		let item = {
 			id: Number(id),
