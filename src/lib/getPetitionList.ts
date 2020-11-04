@@ -19,6 +19,8 @@ const getPetitionList = async ({ status = "open", page = 1 }: IPetitionListParam
 				return await getClosedPetitions(page);
 			case "presented":
 				return await getPresentedPetitions(page);
+			case "reported":
+				return await getReportedPetitions(page);	
 		}
 		return undefined;
 	} catch (err) {
@@ -47,6 +49,13 @@ export const getClosedPetitions = async (page: number): Promise<IPetitionList | 
 export const getPresentedPetitions = async (page: number): Promise<IPetitionList | undefined> => {
 	const URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
 	const status = "presented";
+
+	return await createPetitionList(URL, status, page);
+};
+
+export const getReportedPetitions = async (page: number): Promise<IPetitionList | undefined> => {
+	const URL = `https://www.parliament.nz/en/pb/petitions/presentedreported?Criteria.Sort=IOBClosingDate&Criteria.Direction=Ascending&Criteria.page=Petitions&Criteria.ViewAll=1`;
+	const status = "reported";
 
 	return await createPetitionList(URL, status, page);
 };
@@ -96,30 +105,32 @@ const crawlList = async ($: any, start: number, end: number, status: string): Pr
 	let temp = [];
 
 	for (let t = start; t < end; t++) {
-		let id = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1) > div > a`)
+		let s = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim().toLowerCase() ?? status;
+		if(status == s)
+		{
+			let id = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1) > div > a`)
 			.attr("href")
 			?.toString()
-			.replace(/.*\/PET_(.*)\/.*/, "$1");
-		let requester = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text()
-			.replace(/.*f\s(.*)[\:\-].*/, "$1")
-			.trim();
-		let title = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*[\:\-]\s(.*)/, "$1").trim();
-		let signatures = Number($(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(4)`).text().trim());
-		let documentId = id ? "PET_".concat(id.toString()) : "unknown";
-		let closingDate = status == "open" ? $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim() : $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim();
+			.replace(/(.*\/PET_|PET|.*DBHOH_PET)(.*)(_|\/.*)/, "$2").trim();
+			let requester = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text()
+				.replace(/.*f\s(.*)[\:\-].*/, "$1")
+				.trim();
+			let title = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1)`).text().replace(/.*[\:\-]\s(.*)/, "$1").trim();
+			let signatures = Number($(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(4)`).text().trim());
+			let documentId = id ? "PET_".concat(id.toString()) : "unknown";
+			let closingDate = status == "open" ? $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim() : $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(3)`).text().trim();
 
-
-		let item = {
-			id: Number(id),
-			status: status,
-			title: title,
-			signatures: signatures,
-			documentId: documentId,
-			closingDate: closingDate,
-			requester: requester
+			let item = {
+				id: Number(id),
+				status: status,
+				title: title,
+				signatures: signatures,
+				documentId: documentId,
+				closingDate: closingDate,
+				requester: requester
+			}
+			temp.push(item);
 		}
-
-		temp.push(item);
 	}
 	let cleaned = omitNil(temp);
 	Object.values(cleaned).map((i) => {
