@@ -105,7 +105,7 @@ const crawlList = async ($: any, start: number, end: number, status: string): Pr
 	let temp = [];
 
 	for (let t = start; t < end; t++) {
-		let s = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim().toLowerCase() ?? status;
+		let s = status == "open" ? status : $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(2)`).text().trim().toLowerCase();
 		if(status == s)
 		{
 			let id = $(`table.table--list > tbody > tr:nth-child(${t}) > td:nth-child(1) > div > a`)
