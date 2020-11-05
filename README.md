@@ -74,7 +74,7 @@ URL params
 - [x] Swagger
 - [x] Unit tests
 - [x] Deployment
-- [ ] Split presented and reported petitions
+- [x] Split presented and reported petitions
 - [ ] 404 page
 - [ ] index page
 - [ ] husky, linting
