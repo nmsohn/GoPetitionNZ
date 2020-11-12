@@ -80,3 +80,4 @@ URL params
 - [ ] husky, linting
 - [ ] TravisCI
 - [ ] Clean dependencies
+- [ ] Add limit query to allow users to customise
